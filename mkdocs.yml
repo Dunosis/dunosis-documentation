@@ -1,0 +1,122 @@
+site_name: Dunosis Docs
+site_url: https://docs.dunosis.com
+site_description: This is the official documentation page for Dunossis.
+theme:
+  name: material
+  features:
+    - navigation.footer
+    - navigation.tabs
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.sections
+    - content.code.copy
+  font:
+    text: Montserrat
+    code: Roboto Mono
+  logo: /assets/dunosis-logo.png
+  favicon: /assets/favicon.ico
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: black
+      accent: light blue
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: black
+      accent: deep orange
+  
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.tasklist
+
+nav:
+  - Home:
+    - Overview: index.md
+    - About: home/about.md
+    - FAQ: home/faq.md
+  - Code:
+    - Overview: code/code-overview.md
+    - Style Guide: code/style-guide.md
+    - DevOps:
+      - New Project Repo: code/devops/new-project-repo.md
+      - Digital Ocean Deployment:
+        - App Platform: code/devops/digital-ocean/app-platform.md
+        - Droplets: code/devops/digital-ocean/droplets.md
+      - Hetzner Server: code/devops/hetzner.md
+      - Twenty CRM: code/devops/twenty-crm.md
+      - Upgrading Twenty CRM: code/devops/twenty-upgrade.md
+    - Backend:
+      - SEO: code/backend/seo.md
+      - Bytestash: code/backend/bytestash.md
+    - Frontend:
+      - Custom Fonts: code/frontend/custom-fonts.md
+  - Client Instructions:
+    - Overview: client-instructions/client-instructions-overview.md
+    - Admin Dashboard:
+      - Managing Users: client-instructions/admin-dashboard/managing-users.md
+      - Managing Content: client-instructions/admin-dashboard/managing-content.md
+      - Password Reset: client-instructions/admin-dashboard/password-reset.md
+    - Service Requests:
+      - Creating a Request: client-instructions/service-requests/creating-requests.md
+      - Updating a Request: client-instructions/service-requests/updating-requests.md
+      - Closing a Request: client-instructions/service-requests/closing-requests.md
+    - Common Issues:
+      - Troubleshooting: client-instructions/common-issues/troubleshooting.md
+      - Error Messages: client-instructions/common-issues/error-messages.md
+      - Common Fixes: client-instructions/common-issues/common-fixes.md
+  - Design:
+    - Overview: design/design-overview.md
+    - Branding Guidelines: design/branding-guidelines.md
+  - Business:
+    - Overview: business/business-overview.md
+    - Marketing:
+      - Cloud Storage Onboarding: business/marketing/cloud-storage-onboarding.md
+      - Cloud Storage Usage: business/marketing/cloud-storage-usage.md
+    - Sales: business/sales.md
+    - Workflows:
+      - Client On-Boarding: business/workflows/client-onboarding.md
+      - On-Boarding Questions: business/workflows/onboarding-questions.md
+      - Client Close-Out: business/workflows/client-close-out.md
+  - Additional Resources:
+    - Overview: resources/resources-overview.md
+    - Tools and Technologies: resources/tools-and-technologies.md
+    - Glossary: resources/glossary.md
+
+extra:
+  social:
+    - icon: material/github
+      link: https://github.com/wesordonez
+    - icon: material/linkedin
+      link: https://www.linkedin.com/in/wesley-ordonez/
+    - icon: material/instagram
+      link: https://www.instagram.com/dunosis.usa
+    - icon: material/facebook
+      link: https://www.facebook.com/profile.php?id=61565984502377
+
+copyright: Copyright &copy; 2025 Dunosis LLC
