@@ -1,0 +1,2981 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This is the official documentation page for Dunossis.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.dunosis.com/code/devops/hetzner-server-setup/">
+      
+      
+        <link rel="prev" href="../hetzner/">
+      
+      
+        <link rel="next" href="../twenty-crm/">
+      
+      
+      <link rel="icon" href="/assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Coolify + Hetzner Deployment - Dunosis Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deployment-process-hetzner-coolify" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Dunosis Docs" class="md-header__button md-logo" aria-label="Dunosis Docs" data-md-component="logo">
+      
+  <img src="/assets/dunosis-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Dunosis Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Coolify + Hetzner Deployment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../code-overview/" class="md-tabs__link">
+          
+  
+  
+  Code
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../client-instructions/client-instructions-overview/" class="md-tabs__link">
+          
+  
+  
+  Client Instructions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../design/design-overview/" class="md-tabs__link">
+          
+  
+  
+  Design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../business/business-overview/" class="md-tabs__link">
+          
+  
+  
+  Business
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../resources/resources-overview/" class="md-tabs__link">
+          
+  
+  
+  Additional Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Dunosis Docs" class="md-nav__button md-logo" aria-label="Dunosis Docs" data-md-component="logo">
+      
+  <img src="/assets/dunosis-logo.png" alt="logo">
+
+    </a>
+    Dunosis Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../home/about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../home/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Code
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../code-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    DevOps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            DevOps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-project-repo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    New Project Repo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_2" id="__nav_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Digital Ocean Deployment
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Digital Ocean Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../digital-ocean/app-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    App Platform
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../digital-ocean/droplets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Droplets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hetzner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hetzner Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Coolify + Hetzner Deployment
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Coolify + Hetzner Deployment
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-provisioning-the-server-hetzner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 1: Provisioning the Server (Hetzner)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Provisioning the Server (Hetzner)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create the Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Configure the Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configure the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Name
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-connect-server-to-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 2: Connect Server to Coolify
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Connect Server to Coolify">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-add-server-to-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add Server to Coolify
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-validate-and-install-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Validate and Install Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-deploy-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 3: Deploy an Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Deploy an Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-create-a-project-in-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Create a Project in Coolify
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Create Environments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-create-resources-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Create Resources (Application)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-configure-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Configure the Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-deploy-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Deploy and Test!
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../twenty-crm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Twenty CRM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../twenty-upgrade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Upgrading Twenty CRM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Backend
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Backend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/seo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SEO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/bytestash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bytestash
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Frontend
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/custom-fonts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Fonts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Client Instructions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Client Instructions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/client-instructions-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Admin Dashboard
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Admin Dashboard
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/admin-dashboard/managing-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Managing Users
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/admin-dashboard/managing-content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Managing Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/admin-dashboard/password-reset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Password Reset
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Service Requests
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Service Requests
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/service-requests/creating-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Creating a Request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/service-requests/updating-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Updating a Request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/service-requests/closing-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Closing a Request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Common Issues
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Common Issues
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/common-issues/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/common-issues/error-messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Messages
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../client-instructions/common-issues/common-fixes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Common Fixes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Design
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design/design-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design/branding-guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Branding Guidelines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Business
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Business
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/business-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Marketing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Marketing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/marketing/cloud-storage-onboarding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Onboarding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/marketing/cloud-storage-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/sales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sales
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/workflows/client-onboarding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client On-Boarding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/workflows/onboarding-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    On-Boarding Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../business/workflows/client-close-out/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Close-Out
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Additional Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Additional Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resources/resources-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resources/tools-and-technologies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tools and Technologies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resources/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-provisioning-the-server-hetzner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 1: Provisioning the Server (Hetzner)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Provisioning the Server (Hetzner)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create the Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Configure the Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configure the Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Name
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-connect-server-to-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 2: Connect Server to Coolify
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Connect Server to Coolify">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-add-server-to-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add Server to Coolify
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-validate-and-install-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Validate and Install Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-deploy-an-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Part 3: Deploy an Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Deploy an Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-create-a-project-in-coolify" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Create a Project in Coolify
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Create Environments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-create-resources-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Create Resources (Application)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-configure-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Configure the Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-deploy-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Deploy and Test!
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="deployment-process-hetzner-coolify">Deployment Process: Hetzner + Coolify</h1>
+<p>This guide documents the complete process for provisioning a Virtual Private Server (VPS) on <strong>Hetzner</strong> and configuring it with <strong>Coolify</strong> for automated application deployment.</p>
+<h2 id="part-1-provisioning-the-server-hetzner">Part 1: Provisioning the Server (Hetzner)</h2>
+<h3 id="1-create-the-server">1. Create the Server</h3>
+<p>Everything starts with a VPS on <a href="https://www.hetzner.com/cloud">Hetzner Cloud</a>.
+In your control panel, select your project and click <strong>Add server</strong>.</p>
+<p><img alt="Create server in Hetzner" loading="lazy" src="../assets/hetzner/hz-create.jpeg" /></p>
+<h3 id="2-configure-the-server">2. Configure the Server</h3>
+<p>Next, you will need to configure the server specifications based on your needs.</p>
+<p><img alt="Server configuration options" loading="lazy" src="../assets/hetzner/hz-create-pricing.jpeg" /></p>
+<h4 id="location">Location</h4>
+<p>The location is not critical if you choose the cheapest option. If you need a specific location (e.g., to reduce latency for users in the US), select <strong>Ashburn, VA</strong>.</p>
+<p><img alt="Select location" loading="lazy" src="../assets/hetzner/hz-create-country.jpeg" /></p>
+<h4 id="image">Image</h4>
+<p>Select <strong>Ubuntu 24.04</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Coolify v4 officially recommends <strong>Ubuntu 22.04 LTS</strong> or <strong>Ubuntu 24.04 LTS</strong> (64-bit) for optimal performance and compatibility. You can change this later, but it's best to start with the recommended image.</p>
+</div>
+<p><img alt="Select OS image" loading="lazy" src="../assets/hetzner/hz-create-so.jpeg" /></p>
+<h4 id="server-type">Server Type</h4>
+<p>For most development projects or small applications, the cheapest option (like <code>CAX11</code>) is usually sufficient.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip: Resource Planning</p>
+<p>While the cheapest option is a good starting point, consider your needs.
+_ <strong>ARM (CAX):</strong> Best price-to-performance ratio, ideal for most web applications.
+_ <strong>x86 (CPX):</strong> Necessary if you rely on Docker images that only have an <code>amd64</code> build.</p>
+</div>
+<p><img alt="Select server plan" loading="lazy" src="../assets/hetzner/hz-create-pricing-select.jpeg" /></p>
+<h4 id="ssh-keys">SSH Keys</h4>
+<p>This is a crucial security step!</p>
+<ul>
+<li><strong>Recommended:</strong> Select the SSH keys you will use to access the server. You must have the key pair (public and private) already generated on your local machine.</li>
+<li><strong>Not Recommended:</strong> If you do not select any key, Hetzner will email you the <code>root</code> password.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Security First!</p>
+<p><strong>Never use the <code>root</code> password for Coolify.</strong> It's a bad security practice. Always use SSH keys. If you receive the password via email, use it only for the first login to set up SSH key access, then disable password login.</p>
+</div>
+<p><img alt="Select SSH keys" loading="lazy" src="../assets/hetzner/hz-create-ssh.jpeg" />
+<img alt="Credentials email (if SSH is not used)" loading="lazy" src="../assets/hetzner/hz-create-credentials.jpeg" /></p>
+<h4 id="additional-options">Additional Options</h4>
+<p>For a standard Coolify setup, you can leave the defaults.</p>
+<ul>
+<li><strong>Networking:</strong> Leave as default.</li>
+<li><strong>Volumes:</strong> Useful if you need more disk space without increasing CPU/RAM.</li>
+<li><strong>Firewalls:</strong> You can configure this later. Coolify will manage the necessary ports via <code>ufw</code> on the server itself.</li>
+<li><strong>Backups:</strong> Highly recommended for production! It's a low additional cost for daily copies.</li>
+<li><strong>Labels:</strong> Useful for organizing many servers.</li>
+<li><strong>Cloud Config:</strong> For first-boot scripts (advanced users).</li>
+</ul>
+<h4 id="server-name">Server Name</h4>
+<p>Assign a descriptive name to the server.</p>
+<div class="admonition tip">
+<p class="admonition-title">Naming Convention</p>
+<p>A good convention helps with organization:
+_ Use the project or client name in lowercase.
+_ Use dashes (<code>-</code>) instead of spaces.
+_ Avoid numbers or special symbols.
+_ Add a descriptor if necessary (e.g., <code>prod</code>, <code>staging</code>). * <em>Example:</em> <code>duosis-website-prod</code> * <em>Example:</em> <code>saras-cocina-migration</code></p>
+</div>
+<p>Finally, click <strong>Create &amp; Buy now</strong>. Your server will take a few seconds to provision.</p>
+<p><img alt="Dashboard with the new server" loading="lazy" src="../assets/hetzner/hz-create-dashboard.jpeg" /></p>
+<hr />
+<h2 id="part-2-connect-server-to-coolify">Part 2: Connect Server to Coolify</h2>
+<h3 id="3-add-server-to-coolify">3. Add Server to Coolify</h3>
+<p>Once the server is active in Hetzner (and you have its IP address), go to your Coolify instance:</p>
+<ol>
+<li>Navigate to <strong>Servers</strong> and click <strong>Add a new Server</strong>.</li>
+<li>Fill in the fields:<ul>
+<li><strong>Name:</strong> Use the same name as in Hetzner for consistency.</li>
+<li><strong>Description:</strong> Add a simple description (e.g., "Duosis production server").</li>
+<li><strong>IP Address:</strong> The public IP address of your Hetzner server.</li>
+<li><strong>User:</strong> <code>root</code> (if you will use the <code>root</code> SSH key you selected).</li>
+<li><strong>Port:</strong> <code>22</code> (default).</li>
+<li><strong>Private Key:</strong> Select the private SSH key that <em>corresponds</em> to the public key you added to the server in Hetzner.</li>
+</ul>
+</li>
+</ol>
+<p><img alt="Add server in Coolify" loading="lazy" src="../assets/hetzner/co-add.jpeg" />
+<img alt="Server configuration in Coolify" loading="lazy" src="../assets/hetzner/co-rename.jpeg" /></p>
+<h3 id="4-validate-and-install-docker">4. Validate and Install Docker</h3>
+<p>Click <strong>Save &amp; Connect</strong>. Coolify will attempt to connect to the server using the provided SSH key.</p>
+<ul>
+<li>If the connection is successful, Coolify will check if Docker is installed.</li>
+<li>If it's the first time, Coolify will automatically install and configure <strong>Docker Engine</strong> and <strong>Docker Compose</strong> on the server.</li>
+</ul>
+<p><img alt="Validating and installing Docker" loading="lazy" src="../assets/hetzner/co-validate-docker.png" /></p>
+<p>And that's it! Your server is provisioned and connected, ready to deploy applications.</p>
+<hr />
+<h2 id="part-3-deploy-an-application">Part 3: Deploy an Application</h2>
+<h3 id="5-create-a-project-in-coolify">5. Create a Project in Coolify</h3>
+<p>Projects are used to group related resources (applications, databases, etc.).</p>
+<ol>
+<li>In Coolify, go to <strong>Projects</strong>.</li>
+<li>Click <strong>Add a new Project</strong>.</li>
+<li>Assign a name (e.g., the client's or website's name) and a description.</li>
+</ol>
+<p><img alt="Add new project" loading="lazy" src="../assets/hetzner/co-project-add.png" />
+<img alt="Name the project" loading="lazy" src="../assets/hetzner/co-project-add-name.png" /></p>
+<h3 id="6-create-environments">6. Create Environments</h3>
+<p>By default, a project is created with an environment named <code>production</code>. It's good practice to create a development environment (<code>development</code> or <code>dev</code>).</p>
+<ol>
+<li>Inside your project, click <strong>Add a new Environment</strong>.</li>
+<li>Name it <code>development</code>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Environment Parity</p>
+<p>You can create more environments as needed (e.g., <code>staging</code>, <code>testing</code>). This allows you to test changes in one environment (like <code>development</code>) before promoting them to <code>production</code>.</p>
+</div>
+<p><img alt="Create environments in Coolify" loading="lazy" src="../assets/hetzner/co-environment.png" /></p>
+<h3 id="7-create-resources-application">7. Create Resources (Application)</h3>
+<p>We will create a resource (your application) within the <code>development</code> environment.</p>
+<ol>
+<li>Select the <code>development</code> environment.</li>
+<li>Click <strong>Add a new Resource</strong>.</li>
+<li>You have several options. The most common is to deploy from a <strong>GitHub</strong>, <strong>GitLab</strong>, or <strong>Bitbucket</strong> repository.</li>
+<li>Select <strong>Based on a Git repository</strong>.</li>
+</ol>
+<p><img alt="Add new resource" loading="lazy" src="../assets/hetzner/co-resource.png" />
+<img alt="Resource options" loading="lazy" src="../assets/hetzner/co-resource-options.png" />
+<img alt="Select Git resource" loading="lazy" src="../assets/hetzner/co-resource-options-select.png" /></p>
+<p>Next, configure the repository source:</p>
+<ul>
+<li><strong>Server:</strong> Select the Hetzner server you configured earlier.</li>
+<li><strong>Git App:</strong> Choose the GitHub App you have connected to your Coolify instance.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Prerequisite: GitHub App</p>
+<p>This step assumes you have already configured a "Source" in Coolify by linking your GitHub account via the <a href="https://coolify.io/docs/sources/github">Coolify GitHub App</a>.</p>
+</div>
+<p><img alt="Select server" loading="lazy" src="../assets/hetzner/co-resource-options-server.png" />
+<img alt="Select GitHub App" loading="lazy" src="../assets/hetzner/co-select-githubapp.png" /></p>
+<ul>
+<li><strong>Repository:</strong> Select your project's repository.</li>
+<li><strong>Branch:</strong> For the <code>development</code> environment, select your development branch (e.g., <code>dev</code> or <code>develop</code>). For <code>production</code>, you would use <code>main</code> or <code>master</code>.</li>
+</ul>
+<p><img alt="Select repository" loading="lazy" src="../assets/hetzner/co-select-repo.png" /></p>
+<ul>
+<li><strong>Build Pack:</strong> Change this to <strong>Docker Compose</strong>. This tells Coolify to look for a <code>docker-compose.yml</code> file in your repository.</li>
+<li><strong>Docker Compose File:</strong> Specify the path to your compose file (e.g., <code>./docker-compose.yml</code>).</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">File Extension</p>
+<p>Make sure the file extension is correct. Coolify differentiates between <code>.yml</code> and <code>.yaml</code>.</p>
+</div>
+<p><img alt="Configure branch and build pack" loading="lazy" src="../assets/hetzner/co-select-repo-branch.png" /></p>
+<h3 id="8-configure-the-application">8. Configure the Application</h3>
+<p>Once the resource is created, click on it to access its configuration.</p>
+<p><img alt="Application configuration panel" loading="lazy" src="../assets/hetzner/co-configuration.png" /></p>
+<ul>
+<li><strong>General:</strong></li>
+<li><strong>Name:</strong> Name your application. Follow a convention: <code>&lt;app-name&gt;-dev</code> for development and <code>&lt;app-name&gt;-prod</code> for production.</li>
+<li><strong>Description:</strong> Add a description.</li>
+<li><strong>Domains:</strong></li>
+<li>If you don't have a domain, Coolify can generate a preview URL (e.g., <code>app-name.your-coolify-server.com</code>).</li>
+<li>If you have a domain, add it here. For development, you can use a subdomain like <code>dev.my-domain.com</code>. For production, you would use <code>my-domain.com</code> and <code>www.my-domain.com</code>.</li>
+<li>(The step of configuring DNS to point to your server's IP is documented separately).</li>
+<li><strong>Build:</strong></li>
+<li>Here you can add custom <code>build</code> or <code>start</code> commands if your <code>docker-compose.yml</code> requires them or if you are not using Compose.</li>
+<li><strong>Environment Variables:</strong></li>
+<li>Add any environment variables (secrets, API keys, etc.) your application needs.</li>
+<li><strong>Merge pull request variables?</strong> Enable this if you want environment variables to be injected into Pull Request previews as well.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Developer View</p>
+<p>Use the <strong>Developer View</strong> to add or edit environment variables in bulk (in <code>.env</code> format), which is much faster.</p>
+</div>
+<h3 id="9-deploy-and-test">9. Deploy and Test!</h3>
+<p>Once all the configuration is in place:</p>
+<ol>
+<li>Click the <strong>Deploy</strong> button.</li>
+<li>Coolify will fetch the code from your branch, build the Docker image (if necessary), and start the services defined in your <code>docker-compose.yml</code>.</li>
+<li>You can watch the real-time progress in the <strong>Deployment Logs</strong> tab.</li>
+</ol>
+<p>If everything is configured correctly (especially your <code>Dockerfile</code> and <code>docker-compose.yml</code>), the deployment should succeed. If it fails, the logs will indicate the error, which is usually a configuration issue or a missing environment variable.</p>
+<hr />
+<p><strong>Author:</strong> Wesley Ordonez 
+<strong>Last updated:</strong> April 14, 2025</p>
+<hr />
+<h1 id="documentacion-en-espanol">Documentación en Español</h1>
+<h1 id="proceso-de-despliegue-hetzner-coolify">Proceso de Despliegue: Hetzner + Coolify</h1>
+<p>Esta guía documenta el proceso completo para provisionar un servidor virtual (VPS) en <strong>Hetzner</strong> y configurarlo con <strong>Coolify</strong> para el despliegue automatizado de aplicaciones.</p>
+<h2 id="parte-1-provisionar-el-servidor-hetzner">Parte 1: Provisionar el Servidor (Hetzner)</h2>
+<h3 id="1-creacion-del-servidor">1. Creación del Servidor</h3>
+<p>Todo comienza con un VPS en <a href="https://www.hetzner.com/cloud">Hetzner Cloud</a>.
+En tu panel de control, selecciona tu proyecto y haz clic en <strong>Add server</strong> (Añadir servidor).</p>
+<p><img alt="Crear servidor en Hetzner" loading="lazy" src="../assets/hetzner/hz-create.jpeg" /></p>
+<h3 id="2-configuracion-del-servidor">2. Configuración del Servidor</h3>
+<p>A continuación, deberás configurar las especificaciones del servidor según tus necesidades.</p>
+<p><img alt="Opciones de configuración del servidor" loading="lazy" src="../assets/hetzner/hz-create-pricing.jpeg" /></p>
+<h4 id="ubicacion-location">Ubicación (Location)</h4>
+<p>La ubicación no es crítica si eliges la opción más económica. Si necesitas una ubicación específica (p. ej., para reducir latencia con usuarios en EE.UU.), selecciona <strong>Ashburn, VA</strong>.</p>
+<p><img alt="Selección de ubicación" loading="lazy" src="../assets/hetzner/hz-create-country.jpeg" /></p>
+<h4 id="imagen-image">Imagen (Image)</h4>
+<p>Selecciona <strong>Ubuntu 24.04</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Coolify v4 recomienda oficialmente <strong>Ubuntu 22.04 LTS</strong> o <strong>Ubuntu 24.04 LTS</strong> (64-bit) para un rendimiento y compatibilidad óptimos. Puedes cambiar esto más tarde, pero es mejor empezar con la imagen recomendada.</p>
+</div>
+<p><img alt="Selección de imagen del SO" loading="lazy" src="../assets/hetzner/hz-create-so.jpeg" /></p>
+<h4 id="tipo-de-servidor-type">Tipo de Servidor (Type)</h4>
+<p>Para la mayoría de los proyectos de desarrollo o aplicaciones pequeñas, la opción más económica (como <code>CAX11</code>) suele ser suficiente.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip: Planificación de Recursos</p>
+<p>Aunque la opción más barata es un buen punto de partida, considera tus necesidades.
+_ <strong>ARM (CAX):</strong> Mejor relación precio/rendimiento, ideal para la mayoría de las aplicaciones web.
+_ <strong>x86 (CPX):</strong> Necesario si dependes de imágenes Docker que solo tienen compilación <code>amd64</code>.</p>
+</div>
+<p><img alt="Selección del plan de servidor" loading="lazy" src="../assets/hetzner/hz-create-pricing-select.jpeg" /></p>
+<h4 id="claves-ssh-ssh-keys">Claves SSH (SSH Keys)</h4>
+<p>¡Este es un paso de seguridad crucial!</p>
+<ul>
+<li><strong>Recomendado:</strong> Selecciona las claves SSH que usarás para acceder al servidor. Debes tener el par de claves (pública y privada) generado previamente en tu máquina local.</li>
+<li><strong>No recomendado:</strong> Si no seleccionas ninguna clave, Hetzner te enviará un correo electrónico con la contraseña de <code>root</code>.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">¡Seguridad Primero!</p>
+<p><strong>Nunca uses la contraseña de <code>root</code> para Coolify.</strong> Es una mala práctica de seguridad. Siempre usa claves SSH. Si recibes la contraseña por correo, úsala solo la primera vez para iniciar sesión y configurar el acceso con tu clave SSH, luego deshabilita el inicio de sesión con contraseña.</p>
+</div>
+<p><img alt="Selección de claves SSH" loading="lazy" src="../assets/hetzner/hz-create-ssh.jpeg" />
+<img alt="Correo de credenciales (si no se usa SSH)" loading="lazy" src="../assets/hetzner/hz-create-credentials.jpeg" /></p>
+<h4 id="opciones-adicionales">Opciones Adicionales</h4>
+<p>Para una configuración estándar de Coolify, puedes dejar los valores predeterminados.</p>
+<ul>
+<li><strong>Networking:</strong> Dejar por defecto.</li>
+<li><strong>Volumes:</strong> Útil si necesitas más espacio en disco sin aumentar la CPU/RAM.</li>
+<li><strong>Firewalls:</strong> Puedes configurar esto más tarde. Coolify gestionará los puertos necesarios a través de <code>ufw</code> en el propio servidor.</li>
+<li><strong>Backups:</strong> ¡Altamente recomendado para producción! Es un costo adicional bajo por copias diarias.</li>
+<li><strong>Labels:</strong> Útil para organizar muchos servidores.</li>
+<li><strong>Cloud Config:</strong> Para scripts de primer arranque (usuarios avanzados).</li>
+</ul>
+<h4 id="nombre-del-servidor">Nombre del Servidor</h4>
+<p>Asigna un nombre descriptivo al servidor.</p>
+<div class="admonition tip">
+<p class="admonition-title">Convención de Nombres</p>
+<p>Una buena convención ayuda a la organización:
+_ Usa el nombre del proyecto o cliente en minúsculas.
+_ Usa guiones (<code>-</code>) en lugar de espacios.
+_ Evita números o símbolos especiales.
+_ Añade un descriptor si es necesario (p. ej., <code>prod</code>, <code>staging</code>). * <em>Ejemplo:</em> <code>duosis-website-prod</code> * <em>Ejemplo:</em> <code>saras-cocina-migration</code></p>
+</div>
+<p>Finalmente, haz clic en <strong>Create &amp; Buy now</strong>. Tu servidor tardará unos segundos en provisionarse.</p>
+<p><img alt="Panel de control con el nuevo servidor" loading="lazy" src="../assets/hetzner/hz-create-dashboard.jpeg" /></p>
+<hr />
+<h2 id="parte-2-conectar-servidor-a-coolify">Parte 2: Conectar Servidor a Coolify</h2>
+<h3 id="3-anadir-servidor-a-coolify">3. Añadir Servidor a Coolify</h3>
+<p>Una vez que el servidor esté activo en Hetzner (y tengas su dirección IP), ve a tu instancia de Coolify:</p>
+<ol>
+<li>Navega a <strong>Servers</strong> y haz clic en <strong>Add a new Server</strong>.</li>
+<li>Completa los campos:<ul>
+<li><strong>Name:</strong> Usa el mismo nombre que en Hetzner para mantener la coherencia.</li>
+<li><strong>Description:</strong> Añade una descripción simple (p. ej., "Servidor de producción Duosis").</li>
+<li><strong>IP Address:</strong> La dirección IP pública de tu servidor Hetzner.</li>
+<li><strong>User:</strong> <code>root</code> (si usarás la clave SSH de <code>root</code> que seleccionaste).</li>
+<li><strong>Port:</strong> <code>22</code> (predeterminado).</li>
+<li><strong>Private Key:</strong> Selecciona la clave SSH privada que <em>corresponde</em> a la clave pública que añadiste al servidor en Hetzner.</li>
+</ul>
+</li>
+</ol>
+<p><img alt="Añadir servidor en Coolify" loading="lazy" src="../assets/hetzner/co-add.jpeg" />
+<img alt="Configuración del servidor en Coolify" loading="lazy" src="../assets/hetzner/co-rename.jpeg" /></p>
+<h3 id="4-validar-e-instalar-docker">4. Validar e Instalar Docker</h3>
+<p>Haz clic en <strong>Save &amp; Connect</strong>. Coolify intentará conectarse al servidor usando la clave SSH proporcionada.</p>
+<ul>
+<li>Si la conexión es exitosa, Coolify comprobará si Docker está instalado.</li>
+<li>Si es la primera vez, Coolify instalará y configurará automáticamente <strong>Docker Engine</strong> y <strong>Docker Compose</strong> en el servidor.</li>
+</ul>
+<p><img alt="Validación e instalación de Docker" loading="lazy" src="../assets/hetzner/co-validate-docker.png" /></p>
+<p>¡Y eso es todo! Tu servidor está provisionado y conectado, listo para desplegar aplicaciones.</p>
+<hr />
+<h2 id="parte-3-desplegar-una-aplicacion">Parte 3: Desplegar una Aplicación</h2>
+<h3 id="5-crear-un-proyecto-en-coolify">5. Crear un Proyecto en Coolify</h3>
+<p>Los proyectos se utilizan para agrupar recursos relacionados (aplicaciones, bases de datos, etc.).</p>
+<ol>
+<li>En Coolify, ve a <strong>Projects</strong>.</li>
+<li>Haz clic en <strong>Add a new Project</strong>.</li>
+<li>Asigna un nombre (p. ej., el nombre del cliente o del sitio web) y una descripción.</li>
+</ol>
+<p><img alt="Añadir nuevo proyecto" loading="lazy" src="../assets/hetzner/co-project-add.png" />
+<img alt="Nombrar el proyecto" loading="lazy" src="../assets/hetzner/co-project-add-name.png" /></p>
+<h3 id="6-crear-entornos">6. Crear Entornos</h3>
+<p>Por defecto, un proyecto se crea con un entorno llamado <code>production</code>. Es una buena práctica crear un entorno de desarrollo (<code>development</code> o <code>dev</code>).</p>
+<ol>
+<li>Dentro de tu proyecto, haz clic en <strong>Add a new Environment</strong>.</li>
+<li>Nómbralo <code>development</code>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Paridad de Entornos</p>
+<p>Puedes crear más entornos según sea necesario (p. ej., <code>staging</code>, <code>testing</code>). Esto te permite probar cambios en un entorno (como <code>development</code>) antes de promocionarlos a <code>production</code>.</p>
+</div>
+<p><img alt="Crear entornos en Coolify" loading="lazy" src="../assets/hetzner/co-environment.png" /></p>
+<h3 id="7-crear-recursos-aplicacion">7. Crear Recursos (Aplicación)</h3>
+<p>Crearemos un recurso (tu aplicación) dentro del entorno <code>development</code>.</p>
+<ol>
+<li>Selecciona el entorno <code>development</code>.</li>
+<li>Haz clic en <strong>Add a new Resource</strong>.</li>
+<li>Tienes varias opciones. La más común es desplegar desde un repositorio de <strong>GitHub</strong>, <strong>GitLab</strong> o <strong>Bitbucket</strong>.</li>
+<li>Selecciona <strong>Based on a Git repository</strong>.</li>
+</ol>
+<p><img alt="Añadir nuevo recurso" loading="lazy" src="../assets/hetzner/co-resource.png" />
+<img alt="Opciones de recursos" loading="lazy" src="../assets/hetzner/co-resource-options.png" />
+<img alt="Seleccionar recurso de Git" loading="lazy" src="../assets/hetzner/co-resource-options-select.png" /></p>
+<p>A continuación, configura la fuente del repositorio:</p>
+<ul>
+<li><strong>Server:</strong> Selecciona el servidor de Hetzner que configuraste anteriormente.</li>
+<li><strong>Git App:</strong> Elige la GitHub App que has conectado a tu instancia de Coolify.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Prerrequisito: GitHub App</p>
+<p>Este paso asume que ya has configurado una "Source" (Fuente) en Coolify, vinculando tu cuenta de GitHub a través de la <a href="https://coolify.io/docs/sources/github">GitHub App de Coolify</a>.</p>
+</div>
+<p><img alt="Seleccionar servidor" loading="lazy" src="../assets/hetzner/co-resource-options-server.png" />
+<img alt="Seleccionar GitHub App" loading="lazy" src="../assets/hetzner/co-select-githubapp.png" /></p>
+<ul>
+<li><strong>Repository:</strong> Selecciona el repositorio de tu proyecto.</li>
+<li><strong>Branch:</strong> Para el entorno <code>development</code>, selecciona tu rama de desarrollo (p. ej., <code>dev</code> o <code>develop</code>). Para <code>production</code>, usarías <code>main</code> o <code>master</code>.</li>
+</ul>
+<p><img alt="Seleccionar repositorio" loading="lazy" src="../assets/hetzner/co-select-repo.png" /></p>
+<ul>
+<li><strong>Build Pack:</strong> Cambia esto a <strong>Docker Compose</strong>. Esto le dice a Coolify que busque un archivo <code>docker-compose.yml</code> en tu repositorio.</li>
+<li><strong>Docker Compose File:</strong> Especifica la ruta a tu archivo de composición. (p. ej., <code>./docker-compose.yml</code>).</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Extensión de archivo</p>
+<p>Asegúrate de que la extensión del archivo sea la correcta. Coolify diferencia entre <code>.yml</code> y <code>.yaml</code>.</p>
+</div>
+<p><img alt="Configurar rama y build pack" loading="lazy" src="../assets/hetzner/co-select-repo-branch.png" /></p>
+<h3 id="8-configurar-la-aplicacion">8. Configurar la Aplicación</h3>
+<p>Una vez creado el recurso, haz clic en él para acceder a su configuración.</p>
+<p><img alt="Panel de configuración de la aplicación" loading="lazy" src="../assets/hetzner/co-configuration.png" /></p>
+<ul>
+<li><strong>General:</strong></li>
+<li><strong>Name:</strong> Nombra tu aplicación. Sigue una convención: <code>&lt;app-name&gt;-dev</code> para desarrollo y <code>&lt;app-name&gt;-prod</code> para producción.</li>
+<li><strong>Description:</strong> Añade una descripción.</li>
+<li><strong>Domains:</strong></li>
+<li>Si no tienes un dominio, Coolify puede generar una URL de vista previa (p. ej., <code>app-name.tu-coolify-server.com</code>).</li>
+<li>Si tienes un dominio, añádelo aquí. Para desarrollo, puedes usar un subdominio como <code>dev.mi-dominio.com</code>. Para producción, usarías <code>mi-dominio.com</code> y <code>www.mi-dominio.com</code>.</li>
+<li>(El paso de configurar DNS para que apunte a la IP de tu servidor se documenta por separado).</li>
+<li><strong>Build:</strong></li>
+<li>Aquí puedes añadir comandos de <code>build</code> o <code>start</code> personalizados si tu <code>docker-compose.yml</code> los requiere o si no usas Compose.</li>
+<li><strong>Environment Variables:</strong></li>
+<li>Añade cualquier variable de entorno (secrets, claves de API, etc.) que tu aplicación necesite.</li>
+<li><strong>Merge pull request variables?</strong> Activa esto si quieres que las variables de entorno se inyecten también en los <em>previews</em> de Pull Requests.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Vista de Desarrollador</p>
+<p>Usa la <strong>Developer View</strong> (Vista de Desarrollador) para añadir o editar variables de entorno en bloque (formato <code>.env</code>), lo cual es mucho más rápido.</p>
+</div>
+<h3 id="9-desplegar-y-probar">9. ¡Desplegar y Probar!</h3>
+<p>Una vez que toda la configuración esté en su lugar:</p>
+<ol>
+<li>Haz clic en el botón <strong>Deploy</strong> (Desplegar).</li>
+<li>Coolify obtendrá el código de tu rama, construirá la imagen de Docker (si es necesario) y levantará los servicios definidos en tu <code>docker-compose.yml</code>.</li>
+<li>Puedes ver el progreso en tiempo real en la pestaña <strong>Deployment Logs</strong>.</li>
+</ol>
+<p>Si todo está configurado correctamente (especialmente tu <code>Dockerfile</code> y <code>docker-compose.yml</code>), el despliegue debería completarse con éxito. Si falla, los registros (logs) te indicarán el error, que suele ser un problema de configuración o una variable de entorno faltante.</p>
+<hr />
+<p><strong>Autor:</strong> Wesley Ordonez
+<strong>Última actualización:</strong> 23 de octubre de 2025</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../hetzner/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hetzner Server">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Hetzner Server
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../twenty-crm/" class="md-footer__link md-footer__link--next" aria-label="Next: Twenty CRM">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Twenty CRM
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Dunosis LLC
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/wesordonez" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/wesley-ordonez/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.instagram.com/dunosis.usa" target="_blank" rel="noopener" title="www.instagram.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/profile.php?id=61565984502377" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.footer", "navigation.tabs", "navigation.expand", "navigation.path", "navigation.top", "navigation.sections", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
