@@ -19,7 +19,7 @@ Learn how we deploy, monitor, and scale projects with step-by-step guides:
 - **[New Project Repo](devops/new-project-repo.md)**: How to create a new django web dev project repo.
 - **[Digital Ocean Deployment](devops/digital-ocean/app-platform.md)**: How to deploy Dunosis projects to production environments.
 - **[Hetzner Server](devops/hetzner.md)**: How to create a new Hetzner VPS with NGINX, DOCKER, and Portainer.
-- **[Hetzner Server Setup](devops/hetzner-server-setup.md)**: How to create a new Hetzner VPS with NGINX, DOCKER, and Portainer.
+- **[Coolify + Hetzner Deployment](devops/hetzner-server-setup.md)**: How to create a new Hetzner VPS with NGINX, DOCKER, and Portainer.
 - **[Twenty CRM](devops/twenty-crm.md)**: How to install an instance of Twenty CRM on a Hetzner VPS.
 - **[Upgrading Twenty CRM](devops/twenty-upgrade.md)**: How to upgrade a self-hosted Twenty CRM instance.
 
