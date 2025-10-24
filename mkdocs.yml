@@ -69,6 +69,7 @@ nav:
         - App Platform: code/devops/digital-ocean/app-platform.md
         - Droplets: code/devops/digital-ocean/droplets.md
       - Hetzner Server: code/devops/hetzner.md
+      - Hetzner Server Setup: code/devops/hetzner-server-setup.md
       - Twenty CRM: code/devops/twenty-crm.md
       - Upgrading Twenty CRM: code/devops/twenty-upgrade.md
     - Backend:
