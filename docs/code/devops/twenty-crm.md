@@ -1,6 +1,6 @@
 # Installing Twenty CRM on Hetzner
 
-This guide walks you through deploying [Twenty CRM](https://github.com/TwentyHQ/twenty-docker) on a Hetzner server. It assumes you have already completed the [basic Hetzner server setup](hetzner-server-setup.md) with Docker and NGINX Proxy Manager installed.
+This guide walks you through deploying [Twenty CRM](https://github.com/TwentyHQ/twenty-docker) on a Hetzner server. It assumes you have already completed the [Coolify + Hetzner Deployment](hetzner-server-setup.md) with Docker and NGINX Proxy Manager installed.
 
 ## Prerequisites
 

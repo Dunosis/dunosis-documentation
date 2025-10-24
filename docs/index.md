@@ -22,7 +22,7 @@ Welcome to the **Dunosis Documentation Site**! This site is your ultimate guide 
     - [Droplets](code/devops/digital-ocean/droplets.md)
 - [New Project](code/devops/new-project-repo.md)
 - [Hetzner Server](code/devops/hetzner.md)
-- [Hetzner Server Setup](code/devops/hetzner-server-setup.md)
+- [Coolify + Hetzner Deployment](code/devops/hetzner-server-setup.md)
 - [Twenty CRM](code/devops/twenty-crm.md)
 - [Upgrading Twenty CRM](code/devops/twenty-upgrade.md)
 
