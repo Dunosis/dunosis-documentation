@@ -6,7 +6,26 @@ This repository serves as the official docs site for Dunosis.
 
 Follow these steps to set up the project locally:
 
-### 1. Run the MkDocs Development Server
+### 1. Create development environment
+
+```bash
+
+# MacOs
+python3 -m venv venv
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+.\venv\Scripts\Activate
+```
+
+### 2. Install Markdocs
+
+```bash
+pip install mkdocs-material
+```
+
+### 3. Run the MkDocs Development Server
 
 ```bash
 mkdocs serve

@@ -77,6 +77,10 @@ nav:
       - Bytestash: code/backend/bytestash.md
     - Frontend:
       - Custom Fonts: code/frontend/custom-fonts.md
+    - PWA:
+      - Frameworks:
+        - Django: code/pwa/django-pwa.md
+        - Nextjs: code/pwa/nextjs-pwa.md
   - Client Instructions:
     - Overview: client-instructions/client-instructions-overview.md
     - Admin Dashboard:

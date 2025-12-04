@@ -35,6 +35,12 @@ Welcome to the **Dunosis Documentation Site**! This site is your ultimate guide 
 
 - [Custom Fonts](code/frontend/custom-fonts.md)
 
+**PWA**:
+
+  - **Frameworks**:
+      - [Django](code/pwa/django-pwa.md)
+      - [Nextjs](code/pwa/nextjs-pwa.md)
+
 ### 3. Client Instructions
 - [Overview](client-instructions/client-instructions-overview.md)
 
